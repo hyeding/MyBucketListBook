@@ -1,0 +1,22 @@
+spring.jpa:
+  database: postgresql
+  hibernate:
+    dialect: org.hibernate.direct.PostgresSQLDialect
+    ddl-auto: update
+  properties:
+    hibernate:
+      format_sql: true
+  show-sql: true
+
+spring.datasource:
+  hikari:
+    maximum-pool-size: 4
+  url: jdbc:postgresql://ec2-44-199-143-43.compute-1.amazonaws.com/ddct80i8jrlt1h
+  username: grptnchqrdgtji
+  password: 822a20a7c9965c0fcfcbe893b7a969904baf1009479205abf4095333a08a1027
+  driver-class-name: org.postgresql.Driver
+
+spring:
+  sql:
+    init:
+      platform: postgres
