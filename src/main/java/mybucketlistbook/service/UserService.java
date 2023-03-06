@@ -6,17 +6,19 @@ import mybucketlistbook.exception.SnsApplicationException;
 import mybucketlistbook.model.User;
 import mybucketlistbook.model.entity.UserEntity;
 import mybucketlistbook.repository.UserEntityRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserEntityRepository userEntityRepository;
+    private final BCryptPasswordEncoder encoder;
 
-    // TODO : implement
+    @Transactional
     public User join(String userName, String password) {
         // 회원가입하려는 userName으로 회원가입된 user가 있는지
         userEntityRepository.findByUserName(userName).ifPresent(it -> {
@@ -24,8 +26,10 @@ public class UserService {
         });
 
         // 회원가입 진행 = user를 등록
-        UserEntity userEntity = userEntityRepository.save(UserEntity.of(userName,password));
-        return User.fromEntity(userEntity);
+        UserEntity userEntity = userEntityRepository.save(UserEntity.of(userName,encoder.encode(password)));
+        throw new RuntimeException();
+//        throw new SnsApplicationException(ErrorCode.DUPLICATED_USER_NAME, String.format("%S is duplicated", userName));
+//        return User.fromEntity(userEntity);
     }
 
     // TODO : implement
