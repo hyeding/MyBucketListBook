@@ -24,6 +24,6 @@ spring:
 jwt:
   secret-key: my-bucketlist-book_project-2023.secret_ket
   # 30 days
-  token.expired-time-ms: 24 * 60 * 60 * 60 * 1000 //ms?? *1000? ? ???? 2592000000
+  token.expired-time-ms: 24 * 60 * 60 * 60 * 1000 # 2592000000
 
 

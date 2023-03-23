@@ -8,6 +8,7 @@ import mybucketlistbook.model.entity.UserEntity;
 import mybucketlistbook.repository.UserEntityRepository;
 import mybucketlistbook.util.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,11 @@ public class UserService {
 
     @Value("${jwt.token.expired-time-ms}")
     private long expiredTimeMs;
+
+    public User loadUserByUserName(String userName){
+        return userEntityRepository.findByUserName(userName).map(User::fromEntity).orElseThrow(() ->
+                new SnsApplicationException(ErrorCode.USER_NOT_FOUND,String.format("%s not founded", userName)));
+    }
 
     @Transactional
     public User join(String userName, String password) {
