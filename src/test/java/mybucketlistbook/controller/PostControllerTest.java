@@ -3,11 +3,15 @@ package mybucketlistbook.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mybucketlistbook.controller.request.UserJoinRequest;
 import mybucketlistbook.controller.response.PostCreateRequest;
+import mybucketlistbook.service.PostService;
 import org.assertj.core.api.ObjectEnumerableAssert;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -27,6 +31,9 @@ public class PostControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @MockBean
+    private PostService postService;
+
     @Test
     @WithMockUser
     void 포스트작성() throws Exception {
@@ -34,7 +41,7 @@ public class PostControllerTest {
         String title = "title";
         String body = "body";
 
-        mockMvc.perform(post("/api/v1/post/join")
+        mockMvc.perform(post("/api/v1/posts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new PostCreateRequest("name", "password"))))
                 .andDo(print())
@@ -50,7 +57,7 @@ public class PostControllerTest {
 
         // 로그인 하지 않은 경우
 
-        mockMvc.perform(post("/api/v1/post/join")
+        mockMvc.perform(post("/api/v1/posts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new PostCreateRequest("name", "password"))))
                 .andDo(print())

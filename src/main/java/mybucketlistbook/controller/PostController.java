@@ -1,5 +1,6 @@
 package mybucketlistbook.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import mybucketlistbook.configuration.AuthenticationConfig;
 import mybucketlistbook.controller.response.PostCreateRequest;
@@ -13,14 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1/posts")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PostController {
 
     private final PostService postService;
+
     @PostMapping
     public Response<Void> create(@RequestBody PostCreateRequest request, Authentication authentication) {
         postService.create(request.getTitle(), request.getBody(), authentication.getName());
 
-        return Response.success(null);
+        return Response.success();
     }
 }

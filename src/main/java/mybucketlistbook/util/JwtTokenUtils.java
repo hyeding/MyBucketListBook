@@ -10,8 +10,11 @@ import java.security.Key;
 import java.util.Date;
 
 public class JwtTokenUtils {
-    public static boolean isValid(String token) {
-    }
+//    public static boolean isValid(String token) {
+//    }
+
+    //토큰 관련 설정을 담당하는 클래스
+    //- 토큰을 발급해주고, 자격증명을 관리함
 
     public static String getUserName (String token, String key) {
         return extractClaims(token, key).get("userName", String.class);
@@ -33,13 +36,12 @@ public class JwtTokenUtils {
                 .setClaims(claims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiredTimeMs))
-                .signWith(getKey(key), SignatureAlgorithm.ES256)
+                .signWith(getKey(key), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     private static Key getKey(String key) {
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
-
     }
 }
