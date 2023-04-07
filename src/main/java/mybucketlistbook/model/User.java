@@ -1,7 +1,6 @@
 package mybucketlistbook.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import mybucketlistbook.model.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +11,8 @@ import java.util.Collection;
 import java.util.List;
 
 // TODO: implement
-@Getter
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
 

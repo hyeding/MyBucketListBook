@@ -1,6 +1,8 @@
 package mybucketlistbook.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mybucketlistbook.model.UserRole;
 import org.hibernate.annotations.SQLDelete;
@@ -10,10 +12,11 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "\"post\"")
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATED \"user\" SET deleted_at = NOW() where id=?")
+@NoArgsConstructor
+@Table(name = "\"post\"")
+@SQLDelete(sql = "UPDATED \"post\" SET deleted_at = NOW() WHERE id=?")
 @Where(clause = "deleted_at is NULL")
 public class PostEntity {
     @Id

@@ -31,38 +31,42 @@ public class JwtTokenFilter extends OncePerRequestFilter { // 매요청마다 �
     private final UserService userService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         // get header
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if(header == null || !header.startsWith("Bearer ")) {
             log.error("Error occurs while getting header. header is null or invalid");
-            filterChain.doFilter(request, response);
+            chain.doFilter(request, response);
             return;
         }
         try {
             final String token = header.split(" ")[1].trim(); //trim() : 문자열 공백제거
-
             // TODO : check token is valid
             if(JwtTokenUtils.isExpired(token,key)) {
                 log.error("Key is expired");
-                filterChain.doFilter(request, response);
+                chain.doFilter(request, response);
             }
+            System.out.println(token);
 
             // TODO : get username from token
             String userName = JwtTokenUtils.getUserName(token, key);
             // TODO : check the userName is valid
             User user = userService.loadUserByUserName(userName);
+            System.out.println(user);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     // TODO
                     user, null,user.getAuthorities());
+            System.out.println(authentication);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        }catch (RuntimeException e) {
+        }
+        catch (RuntimeException e) {
             log.error("Error occurs while validation, {}", e.toString());
-            filterChain.doFilter(request, response);
+            System.out.println("occuuuuuuuur");
+            chain.doFilter(request, response);
             return;
         }
-        filterChain.doFilter(request, response);
+        chain.doFilter(request, response);
     }
 }
