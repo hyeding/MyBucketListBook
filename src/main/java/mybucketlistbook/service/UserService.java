@@ -53,6 +53,7 @@ public class UserService {
         if(!encoder.matches(password,userEntity.getPassword())) {
             throw new SnsApplicationException(ErrorCode.INVALID_PASSWORD);
         }
+
         // 토큰 생성
         String token = JwtTokenUtils.generateToken(userName, secretKey, expiredTimeMs);
         return token;

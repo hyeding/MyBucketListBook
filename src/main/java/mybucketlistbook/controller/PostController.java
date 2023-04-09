@@ -21,7 +21,9 @@ public class PostController {
 
     @PostMapping
     public Response<Void> create(@RequestBody PostCreateRequest request, Authentication authentication) {
-        postService.create(authentication.getName(), request.getTitle(), request.getBody());
+        System.out.println("v1/posts POST 요청");
+        System.out.println(authentication.isAuthenticated());
+        postService.create(request.getTitle(), request.getBody(), authentication.getName());
 
         return Response.success();
         }

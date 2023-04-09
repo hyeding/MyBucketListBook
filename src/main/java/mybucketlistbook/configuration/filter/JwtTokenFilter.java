@@ -34,6 +34,7 @@ public class JwtTokenFilter extends OncePerRequestFilter { // 매요청마다 �
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         // get header
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+
         if(header == null || !header.startsWith("Bearer ")) {
             log.error("Error occurs while getting header. header is null or invalid");
             chain.doFilter(request, response);

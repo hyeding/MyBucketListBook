@@ -36,8 +36,8 @@ public class UserServiceTest {
 
         // moking
         when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.empty());
-        when(encoder.encode(password)).thenReturn("encrypt.password");
-        when(userEntityRepository.save(any())).thenReturn(Optional.of(UserEntityFixture.get(userName, password)));
+        when(encoder.encode(password)).thenReturn("encrypt_password");
+        when(userEntityRepository.save(any())).thenReturn(UserEntityFixture.get(userName, password));
 
         Assertions.assertDoesNotThrow(() -> userService.join(userName, password));
     }
