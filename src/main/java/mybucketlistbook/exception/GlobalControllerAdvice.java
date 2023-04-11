@@ -14,7 +14,6 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(SnsApplicationException.class)
     public ResponseEntity<?> errorHandler (SnsApplicationException e) {
         log.error("Error occurs {}", e.toString());
-        System.out.println();
         return ResponseEntity.status(e.getErrorCode().getStatus())
                 .body(Response.error(e.getErrorCode().name()));
     }

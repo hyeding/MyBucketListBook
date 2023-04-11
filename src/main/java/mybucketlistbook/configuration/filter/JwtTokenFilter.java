@@ -47,24 +47,20 @@ public class JwtTokenFilter extends OncePerRequestFilter { // 매요청마다 �
                 log.error("Key is expired");
                 chain.doFilter(request, response);
             }
-            System.out.println(token);
 
             // TODO : get username from token
             String userName = JwtTokenUtils.getUserName(token, key);
             // TODO : check the userName is valid
             User user = userService.loadUserByUserName(userName);
-            System.out.println(user);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     // TODO
                     user, null,user.getAuthorities());
-            System.out.println(authentication);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         catch (RuntimeException e) {
             log.error("Error occurs while validation, {}", e.toString());
-            System.out.println("occuuuuuuuur");
             chain.doFilter(request, response);
             return;
         }

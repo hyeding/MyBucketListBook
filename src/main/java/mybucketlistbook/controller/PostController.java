@@ -1,16 +1,14 @@
 package mybucketlistbook.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import mybucketlistbook.configuration.AuthenticationConfig;
-import mybucketlistbook.controller.response.PostCreateRequest;
+import mybucketlistbook.controller.request.PostCreateRequest;
+import mybucketlistbook.controller.request.PostModifyRequest;
+import mybucketlistbook.controller.response.PostResponse;
 import mybucketlistbook.controller.response.Response;
+import mybucketlistbook.model.Post;
 import mybucketlistbook.service.PostService;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/posts")
@@ -27,4 +25,11 @@ public class PostController {
 
         return Response.success();
         }
+
+    @PutMapping("/{postId}")
+    public Response<PostResponse> modify(@PathVariable Integer postId, @RequestBody PostModifyRequest request, Authentication authentication) {
+        Post post = postService.modify(request.getTitle(), request.getBody(), authentication.getName(), postId);
+
+        return Response.success(PostResponse.fromPost(post));
     }
+}
