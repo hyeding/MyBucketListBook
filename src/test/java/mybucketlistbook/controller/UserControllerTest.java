@@ -42,7 +42,7 @@ public class UserControllerTest {
 
         mockMvc.perform(post("/api/v1/users/join")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(new UserJoinRequest("name", "password"))))
+                .content(objectMapper.writeValueAsBytes(new UserJoinRequest("userName", "password"))))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -56,7 +56,7 @@ public class UserControllerTest {
 
         mockMvc.perform(post("/api/v1/users/join")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsBytes(new UserJoinRequest("name", "password"))))
+                        .content(objectMapper.writeValueAsBytes(new UserJoinRequest("userName", "password"))))
                 .andDo(print())
                 .andExpect(status().is(ErrorCode.DUPLICATED_USER_NAME.getStatus().value()));
     }
