@@ -1,25 +1,19 @@
 spring.jpa:
-  database: postgresql
+  database: mysql
   hibernate:
-    dialect: org.hibernate.direct.PostgresSQLDialect
+    dialect:
     ddl-auto: update
   properties:
     hibernate:
       format_sql: true
   show-sql: true
 
-spring.datasource:
-  hikari:
-    maximum-pool-size: 4
-  url: jdbc:postgresql://ec2-44-199-143-43.compute-1.amazonaws.com/ddct80i8jrlt1h
-  username: grptnchqrdgtji
-  password: 822a20a7c9965c0fcfcbe893b7a969904baf1009479205abf4095333a08a1027
-  driver-class-name: org.postgresql.Driver
-
 spring:
-  sql:
-    init:
-      platform: postgresql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://13.125.219.195:3306/mybucketlist?useSSL=true&characterEncoding=UTF-8
+    username: ${USER}
+    password: ${PASSWORD}
 
 jwt:
   secret-key: fastcampus_simple_sns_2022_secret_key
