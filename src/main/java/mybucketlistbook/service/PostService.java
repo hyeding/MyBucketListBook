@@ -8,6 +8,8 @@ import mybucketlistbook.model.entity.UserEntity;
 import mybucketlistbook.model.Post;
 import mybucketlistbook.repository.PostEntityRepository;
 import mybucketlistbook.repository.UserEntityRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,5 +60,13 @@ public class PostService {
         }
         postEntityRepository.delete(postEntity);
 
+    }
+    // entity mapping
+    public Page<Post> list(Pageable pageable) {
+        return postEntityRepository.findAll(pageable).map(Post::fromEntity);
+    }
+
+    public Page<Post> my(Integer userId, Pageable pageable) {
+        return postEntityRepository.findAllByUserId(userId, pageable).map(Post::fromEntity);
     }
 }
